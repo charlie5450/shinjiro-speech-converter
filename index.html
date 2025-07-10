@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>신지로 화법 변환기</title>
+  <title>신지로 화법 변환기 / シンジロー変換器</title>
   <style>
     :root {
       --bg: #f1f5f9;
@@ -16,155 +16,122 @@
       --card: #334155;
     }
     body {
-      margin: 0;
-      padding: 1rem;
+      font-family: 'Pretendard', sans-serif, sans-serif;
       background-color: var(--bg);
       color: var(--text);
-      font-family: 'Pretendard', sans-serif;
-      display: flex;
-      justify-content: center;
-      transition: background 0.3s, color 0.3s;
-    }
-    .wrapper {
-      max-width: 440px;
-      width: 100%;
       text-align: center;
+      transition: background 0.3s, color 0.3s;
+      margin: 0;
+      padding: 1rem;
     }
     h2 {
       font-size: 2rem;
       margin-bottom: 1rem;
     }
-    img {
-      width: 100%;
-      max-width: 440px;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      user-select: none;
-    }
     textarea {
       width: 100%;
-      height: 100px;
-      font-size: 0.9rem;
-      padding: 0.7rem;
-      border-radius: 8px;
+      max-width: 600px;
+      height: 120px;
+      padding: 1rem;
+      font-size: 1rem;
       border: 1px solid #ccc;
+      border-radius: 8px;
       margin-bottom: 1rem;
-      box-sizing: border-box;
-      resize: vertical;
       background: white;
-      color: var(--text);
-    }
-    .btn-group {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.4rem;
-      margin-bottom: 1rem;
+      color: #111;
+      resize: vertical;
     }
     button {
-      flex: 1 1 auto;
-      min-width: 100px;
-      max-width: 140px;
-      padding: 0.6rem 0.8rem;
-      font-size: 0.9rem;
-      border-radius: 6px;
-      cursor: pointer;
-      color: white;
       border: none;
-      transition: background-color 0.2s;
+      padding: 0.8rem 1rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 0.3rem;
+      color: white;
       user-select: none;
     }
-    button:active {
-      filter: brightness(0.85);
-    }
-    .primary {
-      background-color: #1e3a8a;
-    }
-    .primary:hover {
-      background-color: #1e40af;
-    }
-    .serious {
-      background-color: #334155;
-    }
-    .serious:hover {
-      background-color: #475569;
-    }
-    .casual {
-      background-color: #15803d;
-    }
-    .casual:hover {
-      background-color: #166534;
-    }
-    .funny {
-      background-color: #d97706;
-    }
-    .funny:hover {
-      background-color: #b45309;
-    }
-    .utility {
-      background-color: #64748b;
-    }
-    .utility:hover {
-      background-color: #475569;
-    }
+    .primary { background-color: #1e3a8a; }
+    .primary:hover { background-color: #1e40af; }
+    .serious { background-color: #334155; }
+    .serious:hover { background-color: #475569; }
+    .casual { background-color: #15803d; }
+    .casual:hover { background-color: #166534; }
+    .funny { background-color: #d97706; }
+    .funny:hover { background-color: #b45309; }
+    .utility { background-color: #64748b; }
+    .utility:hover { background-color: #475569; }
     #output {
+      margin-top: 2rem;
+      font-size: 1.4rem;
       background-color: var(--card);
-      padding: 1.2rem;
-      border-radius: 8px;
-      font-size: 1.2rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      margin-bottom: 1rem;
-      min-height: 60px;
       color: var(--text);
-      user-select: text;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      min-height: 80px;
       white-space: pre-wrap;
       word-break: break-word;
     }
     #history {
+      margin-top: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
       text-align: left;
-      max-width: 440px;
-      margin: 0 auto 1rem;
       font-size: 0.9rem;
       color: var(--text);
-      user-select: text;
+    }
+    #history h3 {
+      margin-bottom: 0.5rem;
+    }
+    #langButtons {
+      margin-bottom: 1rem;
     }
   </style>
 </head>
 <body>
-  <div class="wrapper">
-    <h2>🧠 신지로 화법 변환기</h2>
 
-    <img src="thumbnail.jpg" alt="고이즈미 신지로" />
-    <textarea
-      id="inputText"
-      placeholder="하고 싶은 말을 입력하세요. 예: 우리는 지금 변화가 필요합니다."
-    ></textarea>
-
-    <div class="btn-group">
-      <button class="primary" onclick="convertToShinjiro()">
-        변환
-      </button>
-    </div>
-
-    <div class="btn-group">
-      <button class="serious" onclick="insertExample('serious')">🔵 진지한 문장</button>
-      <button class="casual" onclick="insertExample('casual')">🟢 일상 문장</button>
-      <button class="funny" onclick="insertExample('funny')">🟡 웃긴 문장</button>
-      <button class="funny" onclick="randomConvert()">🎲 랜덤 변환</button>
-    </div>
-
-    <div class="btn-group">
-      <button class="utility" onclick="copyOutput()">📋 복사하기</button>
-      <button class="utility" onclick="speakOutput()">🗣️ 읽어주기</button>
-      <button class="utility" onclick="toggleDarkMode()">🌙 다크 모드</button>
-    </div>
-
-    <div id="output">👉 변환된 문장이 여기에 나타납니다.</div>
-    <div id="history"></div>
+  <div id="langButtons">
+    <button class="utility" id="btnKo">한국어</button>
+    <button class="utility" id="btnJa">日本語</button>
   </div>
 
-  <script>
-    const examples = {
+  <h2 data-lang="ko">🧠 신지로 화법 변환기</h2>
+  <h2 data-lang="ja" style="display:none;">🧠 シンジロー変換器</h2>
+
+  <img src="thumbnail.jpg" alt="고이즈미 신지로" style="width:100%; max-width:630px; border-radius:8px; margin-bottom:1rem;">
+<br/>
+  <textarea
+    id="inputText"
+    data-placeholder-ko="하고 싶은 말을 입력하세요. 예: 우리는 지금 변화가 필요합니다."
+    data-placeholder-ja="言いたいことを入力してください。例：私たちは今変化が必要です。"
+    placeholder="하고 싶은 말을 입력하세요. 예: 우리는 지금 변화가 필요합니다."
+  ></textarea><br/>
+
+  <button class="primary" id="convertBtn" data-text-ko="신지로 스타일로 바꾸기" data-text-ja="シンジロースタイルに変換する">신지로 스타일로 바꾸기</button>
+  <br/>
+  <button class="serious" data-type="serious"></button>
+  <button class="casual" data-type="casual"></button>
+  <button class="funny" data-type="funny"></button>
+  <button class="funny" id="randomBtn">🎲 랜덤 변환 / ランダム変換</button>
+  <br/>
+  <button class="utility" id="copyBtn">📋 복사하기 / コピー</button>
+  <button class="utility" id="speakBtn">🗣️ 읽어주기 / 読み上げ</button>
+  <button class="utility" id="darkModeBtn">🌙 다크 모드 / ダークモード</button>
+
+  <div id="output" data-text-ko="👉 변환된 문장이 여기에 나타납니다." data-text-ja="👉 変換された文章がここに表示されます。">
+    👉 변환된 문장이 여기에 나타납니다.
+  </div>
+
+  <div id="history"></div>
+
+<script>
+  const examples = {
+    ko: {
       serious: [
         "지속 가능한 성장이 중요합니다.",
         "책임감 있는 리더십이 필요합니다.",
@@ -188,26 +155,85 @@
         "나는 나입니다.",
         "출근은 출근이고, 퇴근은 퇴근입니다.",
       ],
-    };
+    },
+    ja: {
+      serious: [
+        "持続可能な成長が重要です。",
+        "責任あるリーダーシップが必要です。",
+        "国民の信頼が最優先です。",
+        "政治とは結局人間のことです。",
+        "より良い社会を作らなければなりません。",
+      ],
+      casual: [
+        "私たちは今、変化が必要です。",
+        "今日も全力を尽くさなければなりません。",
+        "みんなが一緒にやらなければなりません。",
+        "準備された者だけがチャンスをつかみます。",
+        "今でなければダメです。",
+      ],
+      funny: [
+        "水と油は混ざりませんが、ドレッシングになります。",
+        "今日は私の誕生日です。",
+        "毎日食べたいです。",
+        "気候は重要です。",
+        "政治とは政治です。",
+        "私は私です。",
+        "出勤は出勤で、退勤は退勤です。",
+      ],
+    }
+  };
 
-    const history = [];
+  let currentLang = 'ko'; // 초기 언어
 
-    function insertExample(type) {
-      const sentenceList = examples[type];
-      const randomIndex = Math.floor(Math.random() * sentenceList.length);
-      document.getElementById("inputText").value = sentenceList[randomIndex];
+  const history = [];
+
+  // 언어에 맞게 UI 텍스트 세팅
+  function setUIText(lang) {
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      el.style.display = (el.getAttribute('data-lang') === lang) ? '' : 'none';
+    });
+
+    const input = document.getElementById('inputText');
+    input.placeholder = input.getAttribute(`data-placeholder-${lang}`);
+
+    const convertBtn = document.getElementById('convertBtn');
+    convertBtn.textContent = convertBtn.getAttribute(`data-text-${lang}`);
+
+    const output = document.getElementById('output');
+    output.textContent = output.getAttribute(`data-text-${lang}`);
+
+    document.getElementById('copyBtn').textContent = lang === 'ko' ? "📋 복사하기" : "📋 コピー";
+    document.getElementById('speakBtn').textContent = lang === 'ko' ? "🗣️ 읽어주기" : "🗣️ 読み上げ";
+    document.getElementById('darkModeBtn').textContent = lang === 'ko' ? "🌙 다크 모드" : "🌙 ダークモード";
+
+    // 예문 버튼 텍스트
+    document.querySelector('button.serious').textContent = lang === 'ko' ? "🔵 진지한 문장" : "🔵 真面目な文章";
+    document.querySelector('button.casual').textContent = lang === 'ko' ? "🟢 일상 문장" : "🟢 日常の文章";
+    document.querySelector('button.funny:not(#randomBtn)').textContent = lang === 'ko' ? "🟡 웃긴 문장" : "🟡 面白い文章";
+
+    document.getElementById('randomBtn').textContent = lang === 'ko' ? "🎲 랜덤 변환" : "🎲 ランダム変換";
+  }
+
+  function insertExample(type) {
+    const sentenceList = examples[currentLang][type];
+    const randomIndex = Math.floor(Math.random() * sentenceList.length);
+    document.getElementById("inputText").value = sentenceList[randomIndex];
+  }
+
+  function convertToShinjiro() {
+    let input = document.getElementById("inputText").value.trim();
+    let output = "";
+
+    if (input.length === 0) {
+      output = currentLang === 'ko'
+        ? "먼저 말을 해야, 말을 할 수 있습니다."
+        : "まずは言葉を入力してください。";
+      setOutput(output);
+      return;
     }
 
-    function convertToShinjiro() {
-      let input = document.getElementById("inputText").value.trim();
-      let output = "";
-
-      if (input.length === 0) {
-        output = "먼저 말을 해야, 말을 할 수 있습니다.";
-        setOutput(output);
-        return;
-      }
-
+    if (currentLang === 'ko') {
+      // 한국어 변환 로직
       if (input.includes("물") && input.includes("기름")) {
         output = `${input} 하지만 물과 기름은 섞이지 않습니다. 그런데 섞이면 드레싱이 됩니다.`;
       } else if (input.includes("생일")) {
@@ -225,54 +251,104 @@
       } else if (input.includes("해야")) {
         output = `${input} 왜냐하면 우리가 그것을 해야 하기 때문입니다.`;
       } else if (input.includes("우리는")) {
-        output = `${input} 그렇기에 우리는 ${input
-          .replace("우리는", "")
-          .replace("한다", "해야 합니다")}.`;
+        output = `${input} 그렇기에 우리는 ${input.replace("우리는", "").replace("한다", "해야 합니다")}.`;
       } else {
         output = `${input} 라는 말은 결국 ${input} 라는 뜻입니다.`;
       }
-
-      setOutput(output);
+    } else {
+      // 일본어 변환 로직 (간단 예시)
+      if (input.includes("水") && input.includes("油")) {
+        output = `${input} しかし、水と油は混ざりません。でも混ざればドレッシングになります。`;
+      } else if (input.includes("誕生日")) {
+        output = `${input} 今日は誕生日ですか？私も誕生日に生まれました。`;
+      } else if ((input.includes("今") || input.includes("現在")) && input.includes("必要")) {
+        output = `${input} 今でなければなりません。なぜなら今だからです。`;
+      } else if (input.includes("食べたい") || input.includes("毎日")) {
+        output = `${input} 毎日食べたいということは、毎日食べるという意味ではありません。`;
+      } else if (input.includes("気候") || input.includes("環境")) {
+        output = `${input} 気候変動はクールでセクシーでなければなりません。`;
+      } else if (input.includes("政治")) {
+        output = `${input} 政治とは結局政治です。だから政治は政治でなければなりません。`;
+      } else if (input.includes("変化")) {
+        output = `${input} しかし結局、変化とは変化そのものです。`;
+      } else if (input.includes("必要")) {
+        output = `${input} なぜなら私たちがそれをしなければならないからです。`;
+      } else if (input.includes("私たち")) {
+        output = `${input} だから私たちは${input.replace("私たち", "").replace("必要", "しなければなりません")}`;
+      } else {
+        output = `${input} という言葉は結局${input}という意味です。`;
+      }
     }
 
-    function setOutput(text) {
-      document.getElementById("output").textContent = text;
-      updateHistory(text);
-    }
+    setOutput(output);
+  }
 
-    function updateHistory(sentence) {
-      history.unshift(sentence);
-      if (history.length > 5) history.pop();
+  function setOutput(text) {
+    document.getElementById("output").textContent = text;
+    updateHistory(text);
+  }
 
-      const historyHtml = history
-        .map((h, i) => `<div>${i + 1}. ${h}</div>`)
-        .join("");
-      document.getElementById("history").innerHTML =
-        "<h3>📝 최근 변환 기록</h3>" + historyHtml;
-    }
+  function updateHistory(sentence) {
+    history.unshift(sentence);
+    if (history.length > 5) history.pop();
 
-    function copyOutput() {
-      const text = document.getElementById("output").textContent;
-      navigator.clipboard.writeText(text).then(() => alert("복사되었습니다."));
-    }
+    const historyHtml = history
+      .map((h, i) => `<div>${i + 1}. ${h}</div>`)
+      .join("");
+    const historyTitle = currentLang === 'ko' ? "📝 최근 변환 기록" : "📝 最近の変換履歴";
 
-    function speakOutput() {
-      const text = document.getElementById("output").textContent;
-      const utter = new SpeechSynthesisUtterance(text);
-      utter.lang = "ko-KR";
-      speechSynthesis.speak(utter);
-    }
+    document.getElementById("history").innerHTML = `<h3>${historyTitle}</h3>${historyHtml}`;
+  }
 
-    function randomConvert() {
-      const all = [...examples.serious, ...examples.casual, ...examples.funny];
-      const random = all[Math.floor(Math.random() * all.length)];
-      document.getElementById("inputText").value = random;
-      convertToShinjiro();
-    }
+  function copyOutput() {
+    const text = document.getElementById("output").textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      alert(currentLang === 'ko' ? "복사되었습니다." : "コピーされました。");
+    });
+  }
 
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark");
-    }
-  </script>
+  function speakOutput() {
+    const text = document.getElementById("output").textContent;
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = currentLang === 'ko' ? "ko-KR" : "ja-JP";
+    speechSynthesis.speak(utter);
+  }
+
+  function randomConvert() {
+    const all = [...examples[currentLang].serious, ...examples[currentLang].casual, ...examples[currentLang].funny];
+    const random = all[Math.floor(Math.random() * all.length)];
+    document.getElementById("inputText").value = random;
+    convertToShinjiro();
+  }
+
+  function toggleDarkMode() {
+    document.body.classList.toggle("dark");
+  }
+
+  // 초기 UI 세팅
+  setUIText(currentLang);
+
+  // 이벤트 바인딩
+  document.getElementById('btnKo').addEventListener('click', () => {
+    currentLang = 'ko';
+    setUIText(currentLang);
+  });
+  document.getElementById('btnJa').addEventListener('click', () => {
+    currentLang = 'ja';
+    setUIText(currentLang);
+  });
+
+  document.getElementById('convertBtn').addEventListener('click', convertToShinjiro);
+
+  document.querySelector('button.serious').addEventListener('click', () => insertExample('serious'));
+  document.querySelector('button.casual').addEventListener('click', () => insertExample('casual'));
+  document.querySelector('button.funny:not(#randomBtn)').addEventListener('click', () => insertExample('funny'));
+
+  document.getElementById('randomBtn').addEventListener('click', randomConvert);
+  document.getElementById('copyBtn').addEventListener('click', copyOutput);
+  document.getElementById('speakBtn').addEventListener('click', speakOutput);
+  document.getElementById('darkModeBtn').addEventListener('click', toggleDarkMode);
+</script>
+
 </body>
 </html>
