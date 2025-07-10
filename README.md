@@ -6,6 +6,7 @@
 👉 **[지금 접속하기](https://charlie5450.github.io/shinjiro-speech-converter/)**  
 
 > 말은 입력해야 바뀔 수 있고, 바뀐 말은 결국 바뀐 것입니다. 그것이 말이니까.
+
 ![신지로 썸네일 이미지](./thumbnail.jpg)
 
 ---
